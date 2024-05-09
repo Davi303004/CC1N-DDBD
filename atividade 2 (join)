@@ -1,0 +1,34 @@
+use bdex1_hospital;
+select nome,timestampdiff(year,data_nasc, curdate()) as idade from pacientes group by idade;
+
+select d.nome_especialidade as Departamentos, count(p.cpf_paciente) as Pacientes from pacientes P
+join consultas C on P.cpf_paciente = C.cpf_paciente
+join medicos M on C.CRM = M.CRM and C.UF = M.UF
+join departamentos D on M.depto_cod_espec = D.cod_especialidade
+group by Departamentos;
+
+select d.nome_especialidade as Departamentos,avg(timestampdiff(year,P.data_nasc, curdate())) as Idade from pacientes P 
+join consultas C on P.cpf_paciente = C.cpf_paciente
+join medicos M on C.CRM = M.CRM and C.UF = M.UF
+join departamentos D on M.depto_cod_espec = d.cod_especialidade
+group by Departamentos;
+
+use bdex2_passagens_aereas;
+select Id_voo,HORA_PART from voos 
+group by hora_part;
+
+select count(*) as passageiros, VR.Id_voo as Voos from passageiros P 
+join passageiros_reservas PR on P.cod_passageiro = PR.passageiro
+join reservas R on PR.ID_RESERVA = R.ID_RESERVA
+join voos_reservas as VR on R.ID_RESERVA = VR.ID_RESERVA
+group by Voos;
+
+select avg(COD_PASSAGEIRO) as passageiros, VR.Id_voo as Voos from passageiros P 
+join passageiros_reservas PR on P.cod_passageiro = PR.passageiro
+join reservas R on PR.ID_RESERVA = R.ID_RESERVA
+join voos_reservas as VR on R.ID_RESERVA = VR.ID_RESERVA
+group by Voos;
+
+use bdex3_redesocial;
+select ID_POST, DATA_HORA from postagens
+group by data_hora;
