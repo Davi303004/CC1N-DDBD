@@ -1,0 +1,57 @@
+create database if not exists Fortes;
+use Fortes;
+create table if not exists Funcionarios(
+ID_Func INT not null primary key,
+Nome Varchar(50) not null,
+Cargo varchar(30) not null,
+Data_nasc date not null
+);
+
+create table if not exists Empresas(
+CNPJ varchar(14) not null primary key,
+Nome varchar(70) not null,
+Camp_Atuacao varchar(100) not null,
+Status_emp Enum("Cadastrada","Esperando Aprovação"),
+Descricao Text not null,
+Funcionario INT not null,
+constraint fun_emp foreign key(Funcionario) references Funcionarios(ID_Func)
+);
+
+create table if not exists Projetos(
+ID_Projeto INT not null primary key,
+Conteudo Blob not null,
+Area_Atuacao Enum("Saúde","Educação","Assistência Social","Qualificação Profissional","Meio Ambiente","Geração de Emprego e Renda","Esporte","Lazer","Cultura") not null,
+Descricao Text not null,
+funcionario INT not null,
+empresa varchar(14) not null,
+constraint fun_pro foreign key(funcionario) references Funcionarios(ID_Func),
+constraint emp_pro foreign key(empresa) references Empresas(CNPJ)
+);
+
+create table if not exists Documentos(
+ID_Doc INT not null primary key,
+Conteudo Blob not null, 
+Descricao Text not null,
+Projeto INT not null,
+Funcionario INT not null,
+Empresa varchar(14) not null,
+constraint pro_doc foreign key(Projeto) references Projetos(ID_Projeto),
+constraint fun_doc foreign key(Funcionario) references Funcionarios(ID_Func),
+constraint emp_doc foreign key(Empresa) references Empresas(CNPJ)
+);
+
+create table if not exists Editais(
+ID_Edital INT not null primary key,
+Conteudo Blob not null,
+Descricao Text not null,
+Funcionario INT not null,
+constraint fun_edt foreign key(Funcionario) references Funcionarios(ID_Func)
+);
+
+create table if not exists Projeto_Edital(
+Projeto INT not null,
+Edital INT not null,
+primary key(Projeto,Edital),
+constraint PE1 foreign key(Projeto) references Projetos(ID_Projeto),
+constraint PE2 foreign key(Edital) references Editais(ID_Edital)
+)
