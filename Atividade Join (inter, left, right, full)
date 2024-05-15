@@ -1,0 +1,7 @@
+select c.data_cons as Dia,c.hora_cons as Horario,p.nome as Nome_Paciente, m.nome as Nome_Medico,m.CRM,m.UF, d.Nome_especialidade from consultas as c
+join pacientes as p on p.cpf_Paciente = c.CPF_PACIENTE
+join medicos as m on m.crm = c.crm and m.uf = c.uf
+join departamentos as d on m.depto_cod_espec = d.COD_ESPECIALIDADE;
+
+select m.nome as Medicos, d.Nome_especialidade from medicos as m
+left join departamentos as d on m.depto_cod_espec = d.cod_especialidade;
