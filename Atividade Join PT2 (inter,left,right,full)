@@ -1,0 +1,30 @@
+use bdex5_eventos;
+select e.nome_evento as Eventos,
+group_concat(concat(A.nome_atv,'',A.Data_atv,'',A.hora_atv,'')) 
+from Atividades as A
+join Eventos as e on a.evento_atv = e.id_evento
+group by Eventos;
+
+select p.nome, a.nome_atv from participantes as p
+left join participante_atividade as pa on p.cpf = pa.cpf and p.num_inscricao = pa.inscricao
+left join atividades as a on pa.atividade = a.id_atividade;
+
+select e.nome_evento as Evento,l.nome as Local from eventos as e
+left join locais as l on e.local_evento = l.id_local;
+
+use bdex6_cinema;
+select e.nome_espec,e.data_nasc,e.tel_espec, f.nome_filme,f.tempo_filme from espectadores as e
+join ingressos as i on i.espectador = e.ID_espec
+join sessoes as s on i.sessao = s.id_sessao
+join filmes as f on s.filme = f.Id_filme;
+
+select f.nome_filme,s.nome as sala from filmes as f
+left join sessoes as se on se.filme = f.id_filme
+left join salas as s on se.sala = s.id_sala;
+
+select s.id_sessao,f.nome_filme as Filme,f.Diretor,f.tempo_filme as Duracao from sessoes as s
+join filmes as f on s.filme = f.id_filme;
+
+use bdex7_transacoesbancarias;
+select u.nome_user,u.data_nasc,t.valor,t.natureza,t.conta from transacoes as t 
+join usuarios as u on t.usuario = u.Id_user;
