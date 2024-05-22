@@ -1,0 +1,69 @@
+use bdex3_redesocial;
+#1. Exibir todas as informações da tabela `USUARIOS`.
+select * from usuarios;
+
+#2. Mostrar os nomes, sobrenomes e e-mails de todos os usuários.
+select Nome_Usuario, Sobrenome, Email from usuarios;
+
+#3. Listar os nomes e descrições de todos os grupos.
+select Nome_grupo,Descricao from grupos;
+
+#4. Exibir os detalhes das postagens: ID da postagem, texto, data e hora, e o nome do usuário que postou.
+select p.ID_post,p.texto,p.data_hora,u.nome_usuario from Postagens p
+join usuarios as u on u.id_usuario = p.usuario 
+order by nome_usuario;
+
+#5. Listar o nome dos usuários e a quantidade de postagens que cada um fez.
+select u.nome_usuario, count(p.usuario) from usuarios as u
+join postagens as p on u.Id_usuario = p.usuario
+group by nome_usuario;
+
+#6. Mostrar os nomes dos usuários que fizeram comentários em 2024.
+select u.nome_usuario, c.texto from comentarios as c 
+join usuarios as u on u.Id_usuario = c.usuario
+where year(c.datahora) = 2024;
+
+#7. Listar todos os grupos, ordenados pelo nome do grupo de A a Z.
+select g.nome_grupo as Grupos from grupos g
+order by g.nome_grupo;
+
+#8. Mostrar os nomes dos grupos que têm a palavra "Tecnologia" na descrição.
+select g.nome_grupo from grupos g
+where g.descricao like '%tecnologia%';
+
+#9. Exibir os detalhes dos comentários: ID do comentário, texto, data e hora, nome do usuário que comentou e ID da postagem comentada.
+select c.id_comentario,c.texto,c.datahora as Data_e_Hora,u.nome_usuario,c.post as ID_Postagem from comentarios as c
+join usuarios as u on u.Id_usuario = c.usuario;
+
+#10. Para cada postagem, mostrar o ID da postagem e a quantidade de comentários.
+select p.id_post, count(c.id_comentario) from postagens as p
+join comentarios as c on c.post = p.id_post
+group by p.id_post;
+
+#11. Contar quantos seguidores cada usuário possui.
+select u.nome_usuario,count(su.seguidor) as Seguidores from usuarios as u
+join seguidores_usuarios as su on su.usuario = u.id_usuario
+group by u.nome_usuario;
+
+#12. Listar os nomes dos usuários que pertencem ao grupo "Desenvolvimento".
+select u.nome_usuario from grupos as g
+join usuarios_grupos as su on su.grupo = g.id_grupo
+join usuarios as u on su.usuario = u.id_usuario
+where g.nome_grupo = 'Desenvolvimento';
+
+#13. Mostrar o nome dos usuários e a data e hora da última postagem que eles fizeram.
+select u.nome_usuario,p.data_hora  from postagens as p
+join usuarios as u on p.usuario = u.id_usuario
+group by u.nome_usuario
+order by p.data_hora desc;
+
+#14. Contar quantas postagens cada usuário fez.
+select u.nome_usuario,count(p.usuario)as Numero_Postagens from postagens as p
+join usuarios as u on p.usuario = u.id_usuario
+group by u.nome_usuario;
+
+#15. Para cada grupo, exibir o nome do grupo e a quantidade de usuários que pertencem a ele.
+select g.nome_grupo, count(ug.usuario) as Numero_Integrantes from grupos as g
+join usuarios_grupos as ug on g.id_grupo = ug.grupo
+group by ug.grupo;
+select * from usuarios_grupos;
