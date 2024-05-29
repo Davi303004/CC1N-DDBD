@@ -1,0 +1,57 @@
+use bdex4_estoque;
+#1. Exibir todas as informações da tabela `PRODUTOS`.
+select * from produtos;
+
+#2. Mostrar os nomes e preços dos produtos que custam mais de 50,00.
+select nome_pro as Nome,preco from produtos where preco > 50;
+
+#3. Listar os nomes e cidades dos fornecedores.
+select nome_for,cidade from fornecedores;
+
+#4. Exibir os detalhes dos pedidos de compra: ID do pedido, data, hora e nome do fornecedor.
+select pc.id_Pedido as Pedido,pc.data_pedido as "Data",pc.Hora_pedido ,f.nome_for as Fornecedor from pedidos_compra as pc
+join fornecedores as f on pc.fornecedor = f.id_fornecedor;
+
+#5. Listar o nome dos produtos e a quantidade disponível em cada armazém.
+select p.nome_pro,pa.quantidade from produtos_armazens as pa
+join produtos as p on pa.produto = p.id_produto;
+
+#6. Mostrar os nomes dos fornecedores que têm produtos no armazém de "São Paulo".
+select f.nome_for as Fornecedores from armazens as a
+join produtos_armazens as pa on pa.Armazem = a.id_armazem
+join produtos_fornecedores as pf on pa.produto = pf.produto
+join fornecedores as f on pf.fornecedor = f.id_fornecedor
+where a.cidade_armazem like "São Paulo";
+#7. Listar todos os armazéns, ordenados pelo nome do armazém de A a Z.
+select * from armazens order by nome_armazem asc;
+
+#8. Mostrar os nomes dos produtos que têm a palavra "Premium" na descrição.
+select nome_pro from produtos where descricao like "%Premium%";
+
+#9. Exibir os detalhes dos produtos: ID do produto, nome, descrição, preço e nome dos fornecedores.
+select p.Id_produto,p.nome_pro,p.Descricao,p.preco,f.nome_for as Fornecedores from produtos as p
+join produtos_fornecedores as pf on pf.produto = p.id_produto
+join fornecedores as f on pf.fornecedor = f.id_fornecedor;
+
+#10. Para cada pedido de compra, mostrar o ID do pedido e a quantidade total de produtos solicitados.
+select pc.id_pedido,pc.quantidade from pedidos_compra as pc group by pc.id_pedido;
+
+#11. Contar quantos produtos cada fornecedor oferece.
+select pf.fornecedor, count(pf.produto) as Quantidade_Produtos from produtos_fornecedores as pf group by pf.fornecedor;
+
+#12. Listar os nomes dos produtos e a quantidade disponível no armazém "Rio de Janeiro".
+select p.nome_pro,sum(pa.quantidade) as Quantidade from produtos_armazens as pa
+join armazens as a on pa.armazem = a.id_armazem
+join produtos as p on p.id_produto = pa.produto
+where a.cidade_armazem like "Rio de Janeiro"
+group by p.id_produto;
+
+#13. Mostrar o nome dos fornecedores e a data e hora do último pedido de compra que eles receberam.
+select 
+
+#14. Contar quantos pedidos de compra cada fornecedor recebeu.
+select
+
+#15. Para cada armazém, exibir o nome do armazém e a quantidade total de produtos armazenados nele.
+select
+
