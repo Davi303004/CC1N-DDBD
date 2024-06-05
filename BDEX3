@@ -37,7 +37,7 @@ join usuarios as u on u.Id_usuario = c.usuario;
 
 #10. Para cada postagem, mostrar o ID da postagem e a quantidade de comentários.
 select p.id_post, count(c.id_comentario) from postagens as p
-join comentarios as c on c.post = p.id_post
+left join comentarios as c on c.post = p.id_post
 group by p.id_post;
 
 #11. Contar quantos seguidores cada usuário possui.
