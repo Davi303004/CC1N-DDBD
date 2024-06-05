@@ -40,18 +40,23 @@ select pc.id_pedido,pc.quantidade from pedidos_compra as pc group by pc.id_pedid
 select pf.fornecedor, count(pf.produto) as Quantidade_Produtos from produtos_fornecedores as pf group by pf.fornecedor;
 
 #12. Listar os nomes dos produtos e a quantidade disponível no armazém "Rio de Janeiro".
-select p.nome_pro,sum(pa.quantidade) as Quantidade from produtos_armazens as pa
+select p.nome,sum(pa.quantidade) as Quantidade from produtos_armazens as pa
 join armazens as a on pa.armazem = a.id_armazem
 join produtos as p on p.id_produto = pa.produto
 where a.cidade_armazem like "Rio de Janeiro"
 group by p.id_produto;
 
 #13. Mostrar o nome dos fornecedores e a data e hora do último pedido de compra que eles receberam.
-select 
+select f.nome, pc.data_pedido as Ultima_Data, pc.hora_pedido as Ultima_Hora from fornecedores as f
+join pedidos_compra as pc on pc.fornecedor = f.ID_FORNECEDOR 
+group by pc.Ultima_data,pc.Ultima_hora;
 
 #14. Contar quantos pedidos de compra cada fornecedor recebeu.
-select
+select count(pc.fornecedor) from pedidos_compra as pc
+join fornecedores as f on pc.FORNECEDOR = f.ID_FORNECEDOR
+group by f.id_fornecedor;
 
 #15. Para cada armazém, exibir o nome do armazém e a quantidade total de produtos armazenados nele.
-select
-
+select a.NOME_ARMAZEM, sum(pa.quantidade) as Quantidade_Produto from armazens as a 
+join produtos_armazens as pa on pa.ARMAZEM = a.ID_ARMAZEM
+group by a.nome_armazem;
