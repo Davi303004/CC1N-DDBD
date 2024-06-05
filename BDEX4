@@ -58,5 +58,4 @@ group by f.id_fornecedor;
 
 #15. Para cada armazém, exibir o nome do armazém e a quantidade total de produtos armazenados nele.
 select a.NOME_ARMAZEM, sum(pa.quantidade) as Quantidade_Produto from armazens as a 
-join produtos_armazens as pa on pa.ARMAZEM = a.ID_ARMAZEM
-group by a.nome_armazem;
+left join produtos_armazens as pa on pa.ARMAZEM = a.ID_ARMAZEM;
