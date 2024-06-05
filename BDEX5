@@ -1,0 +1,46 @@
+use BDEX5_EVENTOS;
+#1. Exibir todas as informações da tabela PARTICIPANTES.
+select * from participantes;
+
+#2. Mostrar os nomes e empresas dos participantes que nasceram depois do ano 1990.
+select p.Nome, p.Empresa from participantes as p where data_nasc > 1990;
+
+#3. Listar os nomes dos eventos e as entidades organizadoras.
+select e.Nome_Evento, e.Entidade_Evento from eventos as e;
+
+#4. Exibir os detalhes das atividades: ID da atividade, nome da atividade, data, hora, nome do evento.
+select a.ID_Atividade, a.Nome_ATV, a.Data_ATV, a.Hora_ATV, e.Nome_Evento from atividades as a
+join eventos as e on a.evento_atv = e.id_evento;
+
+#5. Listar o nome dos participantes e quantas atividades cada um participou.
+select p.nome, count(pa.atividade) as Atividades from participantes as p
+join participante_atividade as pa on pa.inscricao = p.num_inscricao and pa.cpf = p.cpf
+group by p.nome;
+
+#6. Mostrar os nomes dos eventos realizados em 2023.
+select e.Nome_Evento from eventos as e where e.data_evento like '%2023'; 
+
+#7. Listar todos os locais, ordenados pelo nome da cidade de A a Z.
+select NOME,CIDADE from locais order by cidade asc;
+
+#8. Mostrar os nomes e CPFs dos participantes que não têm empresa cadastrada.
+select p.nome,p.cpf from participantes as p where empresa = null;
+
+#9. Exibir os nomes dos participantes que estão inscritos em eventos realizados no local com nome 'Centro de Convenções'.
+select p.nome from participantes as p
+join participante_evento as pe on pe.cpf = p.cpf
+join eventos as e on pe.evento = e.id_evento
+join locais l on e.local_evento = l.id_local
+where l.nome like 'Centro de Convenções';
+
+#10. Para cada entidade organizadora, mostrar o nome da entidade e a média de eventos realizados.
+
+#11. Contar quantos participantes têm uma empresa cadastrada.
+
+#12. Listar os nomes dos participantes que participaram de mais de 5 atividades.
+
+#13. Mostrar o nome dos participantes e a data da última atividade que eles participaram.
+
+#14. Contar quantas atividades cada evento possui.
+
+#15. Para cada participante que participou de um evento, mostrar o CPF, o nome e a porcentagem de eventos em relação ao total de eventos realizados.
