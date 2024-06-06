@@ -1,3 +1,4 @@
+
 use BDEX5_EVENTOS;
 #1. Exibir todas as informações da tabela PARTICIPANTES.
 select * from participantes;
@@ -34,13 +35,28 @@ join locais l on e.local_evento = l.id_local
 where l.nome like 'Centro de Convenções';
 
 #10. Para cada entidade organizadora, mostrar o nome da entidade e a média de eventos realizados.
-
+select entidade, avg(contagem) from (
+select entidade_evento as entidade, count(id_evento) as contagem from eventos 
+group by entidades);
 #11. Contar quantos participantes têm uma empresa cadastrada.
+select count(nome) from participantes where empresa is not null;
 
 #12. Listar os nomes dos participantes que participaram de mais de 5 atividades.
+select p.nome, count(pa.atividade) as atividade from participantes p
+join participante_atividade  pa on pa.inscricao = p.num_inscricao and pa.cpf = p.cpf
+where atividade > 5
+;
 
 #13. Mostrar o nome dos participantes e a data da última atividade que eles participaram.
-
+select p.nome, max(a.hora_atv) as Ultima_ATV from participantes p
+join participante_atividade  pa on pa.inscricao = p.num_inscricao and pa.cpf = p.cpf
+join atividades a on a.id_atividade = pa.ATIVIDADE
+group by p.nome;
+ 
 #14. Contar quantas atividades cada evento possui.
+select e.Nome_Evento,count(a.id_atividade) as Quantidade_ATV from atividades a
+join eventos e on a.EVENTO_ATV = ID_EVENTO
+group by evento_atv;
 
 #15. Para cada participante que participou de um evento, mostrar o CPF, o nome e a porcentagem de eventos em relação ao total de eventos realizados.
+select p.cpf,p.nome from participantes p
